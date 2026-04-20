@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quote Generator</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 100px;
+            background: #111;
+            color: #fff;
+        }
+
+        #quote {
+            font-size: 24px;
+            padding: 20px;
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🔥 Inspirational Quotes</h1>
+    <div id="quote">Loading...</div>
+
+    <script>
+        async function getQuote() {
+            const response = await fetch('/api/quote');
+            const data = await response.json();
+
+            const quoteDiv = document.getElementById("quote");
+
+            // fade out
+            quoteDiv.style.opacity = 0;
+
+            setTimeout(() => {
+                quoteDiv.innerText = data.quote;
+                quoteDiv.style.opacity = 1;
+            }, 500);
+        }
+
+        // run every 2 seconds
+        setInterval(getQuote, 2000);
+
+        // run immediately
+        getQuote();
+    </script>
+
+</body>
+</html>
